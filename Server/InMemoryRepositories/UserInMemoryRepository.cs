@@ -55,4 +55,10 @@ public class UserInMemoryRepository: IUserRepository
     {
         return users.AsQueryable();
     }
+
+    public Task<bool> IsUsernameTakenAsync(string username)
+    {
+        bool isTaken = users.Any(u=>u.username.Equals(username, StringComparison.OrdinalIgnoreCase));
+        return Task.FromResult(isTaken);
+    }
 }
