@@ -1,4 +1,5 @@
-﻿using CLI.UI.ManageUsers;
+﻿using CLI.UI.ManagePosts;
+using CLI.UI.ManageUsers;
 using RepositoryContracts;
 
 namespace CLI.UI;
@@ -30,8 +31,9 @@ public class CliApp
                 case "1":
                     await ManageUsers();
                     break;
-               // case "2":
-               //     await ManagePosts();
+                case "2":
+                   await ManagePosts();
+                   break;
                 case "3":
                     return;
                 default:
@@ -47,5 +49,14 @@ public class CliApp
         ListUsersView lUsersView = new ListUsersView(iuserRepository);
         ManageUsersView manageUsersView = new ManageUsersView(createUserView, lUsersView);
         await manageUsersView.Show();
+    }
+
+    private async Task ManagePosts()
+    {
+        CreatePostView createPostView = new CreatePostView(ipostRepository, iuserRepository);
+        ListsPostView listsPostView = new ListsPostView(ipostRepository);
+        SinglePostView singlePostView = new SinglePostView(ipostRepository);
+        ManagePostsView managePostsView = new ManagePostsView(createPostView, listsPostView, singlePostView);
+        await managePostsView.ShowPosts();
     }
 }
