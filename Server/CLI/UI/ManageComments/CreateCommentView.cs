@@ -27,8 +27,12 @@ public class CreateCommentView
 
         InputValidator inputValidator = new InputValidator(userRepository);
         int userId = await inputValidator.getValidUserId();
+        
+        Console.WriteLine("Enter a Post ID: ");
+        int postId = int.Parse(Console.ReadLine());
 
         await commentRepository.AddAsync(new Comment
-            { body = body, UserId = userId });   
+            { body = body, UserId = userId , PostId = postId});   
+        Console.WriteLine("Comment Added");
     }
 }

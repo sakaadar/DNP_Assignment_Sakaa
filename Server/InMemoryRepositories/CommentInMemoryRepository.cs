@@ -55,4 +55,10 @@ public class CommentInMemoryRepository: ICommentRepository
     {
         return comments.AsQueryable();
     }
+
+    public Task<List<Comment>> GetCommentsForPostAsync(int postId)
+    {
+        var commentsForPost = comments.Where(c=>c.PostId==postId).ToList(); //Filtrere listen og henter kun dem som har samme PostId som det angivne fra brugeren. 
+        return Task.FromResult(commentsForPost);
+    }
 }

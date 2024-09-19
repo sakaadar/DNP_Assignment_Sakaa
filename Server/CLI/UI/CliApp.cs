@@ -1,4 +1,5 @@
-﻿using CLI.UI.ManagePosts;
+﻿using CLI.UI.ManageComments;
+using CLI.UI.ManagePosts;
 using CLI.UI.ManageUsers;
 using RepositoryContracts;
 
@@ -24,6 +25,7 @@ public class CliApp
             Console.WriteLine("Menu: ");
             Console.WriteLine("1. Manage Users");
             Console.WriteLine("2. Manage Posts");
+            Console.WriteLine("3. Manage Comments");
             Console.WriteLine("0. Exit");
             var choice = Console.ReadLine();
             switch (choice)
@@ -37,7 +39,8 @@ public class CliApp
                    await ManagePosts();
                    break;
                 case "3":
-                    return;
+                    await ManageComments();
+                    break;
                 default:
                     Console.WriteLine("Invalid choice, please try again");
                     break;
@@ -60,5 +63,13 @@ public class CliApp
         SinglePostView singlePostView = new SinglePostView(ipostRepository);
         ManagePostsView managePostsView = new ManagePostsView(createPostView, listsPostView, singlePostView);
         await managePostsView.ShowPosts();
+    }
+
+    public async Task ManageComments()
+    {
+        CreateCommentView createCommentView = new CreateCommentView(icommentRepository, iuserRepository);
+        ListCommentsForPostView listCommentsForPostView = new ListCommentsForPostView(icommentRepository);
+        ManageCommentsView manageCommentsView = new ManageCommentsView(createCommentView, listCommentsForPostView);
+        await manageCommentsView.showComments();
     }
 }
