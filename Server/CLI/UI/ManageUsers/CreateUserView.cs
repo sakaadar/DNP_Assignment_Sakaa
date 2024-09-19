@@ -15,7 +15,7 @@ public class CreateUserView
     {
        Console.WriteLine("Create A New User--");
        string username = string.Empty;
-       while (!string.IsNullOrEmpty(username))
+       while (string.IsNullOrEmpty(username))
        {
            Console.Write("Username: ");
            username = Console.ReadLine();

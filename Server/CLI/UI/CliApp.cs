@@ -1,6 +1,51 @@
-﻿namespace CLI.UI;
+﻿using CLI.UI.ManageUsers;
+using RepositoryContracts;
+
+namespace CLI.UI;
 
 public class CliApp
 {
+    private readonly IUserRepository iuserRepository;
+    private readonly ICommentRepository icommentRepository;
+    private readonly IPostRepository ipostRepository;
     
+    public CliApp(IUserRepository iuserRepository, ICommentRepository icommentRepository, IPostRepository ipostRepository)
+    {
+        this.iuserRepository = iuserRepository;
+        this.icommentRepository = icommentRepository;
+        this.ipostRepository = ipostRepository;
+    }
+
+    public async Task StartAsync()
+    {
+        while (true)
+        {
+            Console.WriteLine("Menu: ");
+            Console.WriteLine("1. Manage Users");
+            Console.WriteLine("2. Manage Posts");
+            Console.WriteLine("0. Exit");
+            var choice = Console.ReadLine();
+            switch (choice)
+            {
+                case "1":
+                    await ManageUsers();
+                    break;
+               // case "2":
+               //     await ManagePosts();
+                case "3":
+                    return;
+                default:
+                    Console.WriteLine("Invalid choice, please try again");
+                    break;
+            }
+        }
+    }
+
+    private async Task ManageUsers()
+    {
+        CreateUserView createUserView = new CreateUserView(iuserRepository);
+        ListUsersView lUsersView = new ListUsersView(iuserRepository);
+        ManageUsersView manageUsersView = new ManageUsersView(createUserView, lUsersView);
+        await manageUsersView.Show();
+    }
 }

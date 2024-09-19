@@ -9,6 +9,6 @@ public class User
 
     public string ToString()
     {
-        return $"User ID: {id} Username:{username}";
+        return $"User ID: {id} Username: {username}";
     }
 }
