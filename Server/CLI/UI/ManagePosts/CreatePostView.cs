@@ -1,4 +1,5 @@
-﻿using Entitities;
+﻿using CLI.UI.Utility;
+using Entitities;
 using RepositoryContracts;
 
 namespace CLI.UI.ManagePosts;
@@ -31,29 +32,8 @@ public class CreatePostView
             body = Console.ReadLine();
         }
 
-        int userId = 0;
-        bool IsvalidUser = false;
-        while (!IsvalidUser)
-        {
-            Console.WriteLine("Enter a user ID: ");
-            var intput = Console.ReadLine();
-            if (int.TryParse(intput, out userId))
-            {
-                var user = await userRepository.GetSingleAsync(userId);
-                if (user != null)
-                {
-                    IsvalidUser = true;
-                }
-                else
-                {
-                    Console.WriteLine("Invalid User ID, try again");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Enter a valid number");
-            }
-        }
+        InputValidator inputValidator = new InputValidator(userRepository);
+        int userId = await inputValidator.getValidUserId();
         await postRepository.AddAsync(new Post{Title = title,body = body,UserId = userId});
     }
 }
