@@ -28,6 +28,8 @@ public class CliApp
             var choice = Console.ReadLine();
             switch (choice)
             {
+                case "0":
+                    return;
                 case "1":
                     await ManageUsers();
                     break;
