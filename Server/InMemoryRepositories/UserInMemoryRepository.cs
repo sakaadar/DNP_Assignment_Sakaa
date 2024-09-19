@@ -9,7 +9,12 @@ public class UserInMemoryRepository: IUserRepository
 
     public UserInMemoryRepository()
     {
-        users = new List<User>();
+        users = new List<User>()
+        {
+            new User() { id = 1, username = "Sakaadar" },
+            new User() { id = 2, username = "FuIzzy" },
+            new User() { id = 3, username = "Mugaga" },
+        };
     }
     public Task<User> AddAsync(User user)
     {
