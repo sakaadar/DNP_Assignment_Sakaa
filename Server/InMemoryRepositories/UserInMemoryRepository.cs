@@ -25,7 +25,7 @@ public class UserInMemoryRepository: IUserRepository
 
     public Task UpdateAsync(User user)
     {
-        User? userToUpdate = users.FirstOrDefault(u=>u.id==user.id);
+        User? userToUpdate = users.SingleOrDefault(u=>u.id==user.id);
         if (userToUpdate is null)
         {
             throw new InvalidOperationException("User not found");
@@ -37,7 +37,7 @@ public class UserInMemoryRepository: IUserRepository
 
     public Task DeleteAsync(int id)
     {
-        User? userToDelete = users.FirstOrDefault(u=>u.id== id);
+        User? userToDelete = users.SingleOrDefault(u=>u.id== id);
         if (userToDelete is null)
         {
             throw new InvalidOperationException("User does not exists");
@@ -48,7 +48,7 @@ public class UserInMemoryRepository: IUserRepository
 
     public Task<User> GetSingleAsync(int id)
     {
-        User? userToGet = users.FirstOrDefault(u=>u.id==id);
+        User? userToGet = users.SingleOrDefault(u=>u.id==id);
         if (userToGet is null)
         {
             throw new InvalidOperationException("User not found");

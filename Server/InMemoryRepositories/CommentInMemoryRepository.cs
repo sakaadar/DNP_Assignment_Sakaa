@@ -20,7 +20,7 @@ public class CommentInMemoryRepository: ICommentRepository
 
     public Task UpdateAsync(Comment comment)
     {
-        Comment? existingComment = comments.FirstOrDefault(c => c.Id == comment.Id);
+        Comment? existingComment = comments.SingleOrDefault(c => c.Id == comment.Id);
         if (existingComment is null)
         {
             throw new InvalidOperationException($"Comment with id {comment.Id} is not found");
@@ -32,7 +32,7 @@ public class CommentInMemoryRepository: ICommentRepository
 
     public Task DeleteAsync(int id)
     {
-        Comment? commentToDelete = comments.FirstOrDefault(c => c.Id == id);
+        Comment? commentToDelete = comments.SingleOrDefault(c => c.Id == id);
         if (commentToDelete is null)
         {
             throw new InvalidOperationException($"Comment with id {id} is not found");
@@ -43,7 +43,7 @@ public class CommentInMemoryRepository: ICommentRepository
 
     public Task<Comment> GetSingleAsync(int id)
     {
-        Comment? SingleComment = comments.FirstOrDefault(c => c.Id == id);
+        Comment? SingleComment = comments.SingleOrDefault(c => c.Id == id);
         if (SingleComment is null)
         {
             throw new InvalidOperationException($"Comment with id {id} is not found");
