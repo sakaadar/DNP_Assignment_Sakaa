@@ -4,12 +4,14 @@ public class ManageUsersView
 {
     private readonly CreateUserView createUserView;
     private readonly ListUsersView listUsersView;
+    private readonly DeleteUserView deleteUserView;
 
     public ManageUsersView(CreateUserView createUserView,
-        ListUsersView listUsersView)
+        ListUsersView listUsersView, DeleteUserView deleteUserView)
     {
         this.createUserView = createUserView;
         this.listUsersView = listUsersView;
+        this.deleteUserView = deleteUserView;
     }
 
     public async Task Show()
@@ -18,6 +20,7 @@ public class ManageUsersView
         Console.WriteLine("------------------");
         Console.WriteLine("1. Create User");
         Console.WriteLine("2. List Users");
+        Console.WriteLine("3. Delete User");
         Console.WriteLine("Choose option");
         var choice = Console.ReadLine();
 
@@ -28,6 +31,9 @@ public class ManageUsersView
                 break;
             case "2":
                 await listUsersView.listUsersAsync();
+                break;
+            case "3":
+                await deleteUserView.deleteuserAsync();
                 break;
             default:
                 Console.WriteLine("Invalid Choice");

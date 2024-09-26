@@ -51,8 +51,9 @@ public class CliApp
     private async Task ManageUsers()
     {
         CreateUserView createUserView = new CreateUserView(iuserRepository);
-        ListUsersView lUsersView = new ListUsersView(iuserRepository);
-        ManageUsersView manageUsersView = new ManageUsersView(createUserView, lUsersView);
+        ListUsersView listUsersView = new ListUsersView(iuserRepository);
+        DeleteUserView deleteUserView = new DeleteUserView(iuserRepository);
+        ManageUsersView manageUsersView = new ManageUsersView(createUserView, listUsersView, deleteUserView);
         await manageUsersView.Show();
     }
 
