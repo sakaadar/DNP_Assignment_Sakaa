@@ -23,7 +23,7 @@ public class UserFileRepository : IUserRepository
         List<User> users = JsonSerializer.Deserialize<List<User>>(usersAsjson)!;
         int maxId = users.Count > 0 ? users.Max(u=>u.id) : 1;
         user.id = maxId + 1;
-        users.Add((user));
+        users.Add(user);
         usersAsjson = JsonSerializer.Serialize(users);
         await File.WriteAllTextAsync(filePath, usersAsjson);
         return user;
