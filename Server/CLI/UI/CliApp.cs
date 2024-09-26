@@ -53,7 +53,8 @@ public class CliApp
         CreateUserView createUserView = new CreateUserView(iuserRepository);
         ListUsersView listUsersView = new ListUsersView(iuserRepository);
         DeleteUserView deleteUserView = new DeleteUserView(iuserRepository);
-        ManageUsersView manageUsersView = new ManageUsersView(createUserView, listUsersView, deleteUserView);
+        UpdateUserView updateUserView = new UpdateUserView(iuserRepository);
+        ManageUsersView manageUsersView = new ManageUsersView(createUserView, listUsersView, deleteUserView, updateUserView);
         await manageUsersView.Show();
     }
 
