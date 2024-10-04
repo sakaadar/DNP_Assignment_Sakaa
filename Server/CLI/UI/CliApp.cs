@@ -63,7 +63,8 @@ public class CliApp
         CreatePostView createPostView = new CreatePostView(ipostRepository, iuserRepository);
         ListsPostView listsPostView = new ListsPostView(ipostRepository);
         SinglePostView singlePostView = new SinglePostView(ipostRepository);
-        ManagePostsView managePostsView = new ManagePostsView(createPostView, listsPostView, singlePostView);
+        DeletePostView deletePostView = new DeletePostView(ipostRepository);
+        ManagePostsView managePostsView = new ManagePostsView(createPostView, listsPostView, singlePostView,deletePostView);
         await managePostsView.ShowPosts();
     }
 
