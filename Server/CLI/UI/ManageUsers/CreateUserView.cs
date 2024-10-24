@@ -24,8 +24,10 @@ public class CreateUserView
                throw new InvalidOperationException("Username already taken");
            }
        }
+       Console.Write("Password: ");
+       string? password = Console.ReadLine();
        
-       await iuserRepository.AddAsync(new User{username=username});
+       await iuserRepository.AddAsync(new User{username=username, password=password});
        Console.WriteLine("User Created");
        
     }

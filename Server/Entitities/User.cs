@@ -9,6 +9,7 @@ public class User
 
     public string ToString()
     {
-        return $"User ID: {id} Username: {username}";
+        string Maskedpassword = new string('*', password.Length); //udskriver password som ***
+        return $"User ID: {id} Username: {username}, Password: {Maskedpassword}";
     }
 }

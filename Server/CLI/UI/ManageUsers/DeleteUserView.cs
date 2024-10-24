@@ -19,6 +19,7 @@ public class DeleteUserView
         {
             await iuserRepository.DeleteAsync(userId);
             Console.WriteLine("User deleted successfully!");
+            
         }
         else
         {
