@@ -1,3 +1,6 @@
+using FileRepositories;
+using RepositoryContracts;
+
 namespace WebApp;
 
 public class Program
@@ -12,6 +15,10 @@ public class Program
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        
+        builder.Services.AddScoped<IPostRepository, PostFileRepository>();
+        builder.Services.AddScoped<IUserRepository, UserFileRepository>();
+        builder.Services.AddScoped<ICommentRepository, CommentFileRepository>();
 
         var app = builder.Build();
 
