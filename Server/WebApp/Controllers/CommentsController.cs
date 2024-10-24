@@ -59,14 +59,14 @@ public class CommentsController: ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<CreateUpdateCommentDto>> UpdateComment(int id, CreateUpdateCommentDto comment)
+    public async Task<ActionResult<CreateUpdateCommentDto>> UpdateComment(int id, CreateUpdateCommentDto request)
     {
         try
         {
             var commentToUpdate = await commentRepo.GetSingleAsync(id);
-            commentToUpdate.body = comment.body;
-            commentToUpdate.PostId = comment.postId;
-            commentToUpdate.UserId = comment.userId;
+            commentToUpdate.body = request.body;
+            commentToUpdate.PostId = request.postId;
+            commentToUpdate.UserId = request.userId;
             
             await commentRepo.UpdateAsync(commentToUpdate);
             return NoContent();
