@@ -9,22 +9,22 @@ public class PostInMemoryRepository: IPostRepository
 
     public PostInMemoryRepository()
     {
-        posts = new List<Post>()
-        {
-            new Post()
-            {
-                Title = "Nederlag i Paris",
-                body =
-                    "Fc Barcelona led et smertefuldt nederlag i franske alper",
-                Id = 1, UserId = 1
-            },
-            new Post()
-            {
-                Title = "North London Derby!",
-                body = "Tottenham led et smertfuldt nederlag til deres rivaler",
-                Id = 2, UserId = 2
-            },
-        };
+        // posts = new List<Post>()
+        // {
+        //     new Post()
+        //     {
+        //         Title = "Nederlag i Paris",
+        //         body =
+        //             "Fc Barcelona led et smertefuldt nederlag i franske alper",
+        //         Id = 1, UserId = 1
+        //     },
+        //     new Post()
+        //     {
+        //         Title = "North London Derby!",
+        //         body = "Tottenham led et smertfuldt nederlag til deres rivaler",
+        //         Id = 2, UserId = 2
+        //     },
+        // };
     }
     public Task<Post> AddAsync(Post post)
     {

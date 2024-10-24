@@ -34,7 +34,7 @@ public class CreatePostView
 
         InputValidator inputValidator = new InputValidator(userRepository);
         int userId = await inputValidator.getValidUserId();
-        await postRepository.AddAsync(new Post{Title = title,body = body,UserId = userId});
+    //    await postRepository.AddAsync(new Post{Title = title,body = body,UserId = userId});
         Console.WriteLine("Post Created");
     }
 }
