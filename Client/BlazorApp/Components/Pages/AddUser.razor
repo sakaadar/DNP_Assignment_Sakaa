@@ -1,0 +1,34 @@
+﻿@page "/AddUser"
+@using BlazorApp.Services
+@using DTO
+<h3>Add New User</h3>
+@inject IUserService HttpUserService
+
+<input @bind="Username" placeholder="Username"/>
+<input type="password" @bind="password" placeholder="Password"/>
+<button @onclick ="addUser">Submit</button>
+
+@if (!string.IsNullOrEmpty(message))
+{
+    <p>@message</p>
+}
+
+@code {
+    private string Username;
+    private string password;
+    private string message;
+
+    private async Task addUser()
+    {
+        try
+        {
+            var newUser = new CreateUserDto { UserName = "Username", Password = "password" };
+            var result = await HttpUserService.AddUserAsync(newUser);
+            message = $"User added succesfully";
+        }
+        catch (Exception e)
+        {
+            message = $"Error: {e.Message}";
+        }
+    }
+}
