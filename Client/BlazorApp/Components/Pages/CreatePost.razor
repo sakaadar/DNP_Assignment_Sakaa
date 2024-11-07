@@ -1,0 +1,45 @@
+﻿@page "/CreatePost"
+@using BlazorApp.Services
+@using DTO
+
+
+@inject IPostService HttpPostService
+
+<h3>Create Post</h3>
+
+<form>
+    <input @bind="Title" placeholder="Enter Title"/>
+    <input @bind="body" placeholder="Enter a body">
+    <input @bind="userId" placeholder="Enter a user id">
+    <button type="button" @onclick="createPost">Submit</button>
+    @if (!string.IsNullOrEmpty(message))
+    {
+        <p>@message</p>
+    }
+</form>
+@code
+{
+    private string Title;
+    private string body;
+    private int userId;
+    private string message;
+
+    public async Task createPost()
+    {
+        try
+        {
+            var newPost = new CreateUpdatePostDto { Title = Title, body = body, UserId = userId };
+            var result = await HttpPostService.CreatePostAsync(newPost);
+            message = $"Post Created succedfully by user with Id: {result.UserId}";
+
+        }
+        catch (Exception e)
+        {
+            message = $"Error: {e.Message}";
+            Console.WriteLine($"Detailed error: {e}");
+            //StateHasChanged();
+        }
+    }
+}
+
+

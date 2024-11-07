@@ -21,6 +21,7 @@ public class Program
        builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5250") });
       // builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7180") });
         builder.Services.AddScoped<IUserService, HttpUserService>();
+        builder.Services.AddScoped<IPostService, HttpPostService>();
 
         var app = builder.Build();
 

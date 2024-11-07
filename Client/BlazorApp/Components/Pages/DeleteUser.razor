@@ -1,0 +1,76 @@
+﻿@page "/DeleteUser"
+@using BlazorApp.Services
+@inject IUserService HttpUserService
+<h3>DeleteUser</h3>
+
+
+
+<input @bind="userId" placeholder="Enter User ID" >
+<button type="button" @onclick="checkUserId">Check Id</button>
+
+@if (!string.IsNullOrEmpty(message))
+{
+    @if (IsUserFound)
+    {
+        <div style="color: green;">@message</div>
+    }
+    else
+    {
+        <div style="color: red;">@message</div>
+    }
+}
+
+@if (IsUserFound)
+{
+    <button type="button" @onclick="deleteUser">Delete User</button>
+}
+@code
+{
+    private int userId;
+    private bool IsUserFound = false; //Som udgangspunkt sat til
+    private string message;
+
+    public async Task checkUserId()
+    {
+        try
+        {
+
+            var user = await HttpUserService.GetUsersAsync(userId); //Finder først den pågældende bruger
+            if (user != null)
+            {
+                IsUserFound = true;
+                message = string.Empty; //Sørger for at fejlmeddelsen bliver tømt fra UI hvis der var fejl
+            }
+            else
+            {
+                IsUserFound = false;
+                message = $"User with ID {userId} not found.";
+            }
+
+        }
+        catch (Exception e)
+        {
+            message = $"Error: {e.Message}";
+            Console.WriteLine($"Detailed error: {e}");
+            StateHasChanged();
+        }
+
+    }
+
+    public async Task deleteUser()
+    {
+        try
+        {
+            await HttpUserService.DeleteUserAsync(userId);
+            message = $"User with ID {userId} has been successfully deleted.";
+            IsUserFound = false; // Reset så sletteknappen forsvinder
+            StateHasChanged(); // Opdaterer brugergrænseflade
+        }
+        catch (Exception e)
+        {
+            message = $"Error: {e.Message}";
+            Console.WriteLine($"Detailed error: {e}");
+            StateHasChanged(); // Opdaterer brugergrænseflade
+        }
+    }
+}

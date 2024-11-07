@@ -8,33 +8,33 @@
 <button type="button" @onclick="checkUserId">Check Id</button>
 @if (!string.IsNullOrEmpty(message))
 {
-<div style="color: red;">@message</div>
+<div style="color: green;">@message</div>
 }
 
-@if (IsUserFound)
+@if (IsUserFound) //Hvis bruger er fundet
 {
-    <input @bind="updateuser.Username" placeholder="Username" />
-    <input type="password" @bind="password" placeholder="Password" />
-    <button type="button" @onclick="updateUser">Update User</button>
+    <input @bind="updateruser.Username" placeholder="Username" /> //Inputboks til at skrive det nye brugernavn
+    <input type="password" @bind="password" placeholder="Password" /> //Inputboks til password
+    <button type="button" @onclick="updateUser">Update User</button> //Submit som kalder updateUser metoden
 }
 @code
 {
-    private int userId;
-    private bool IsUserFound = false;
-    private UserDto updateuser = new UserDto();
+    private int userId; //bruges til at tjekke id
+    private bool IsUserFound = false; //Som udgangspunkt sat til
+    private UserDto updateruser = new UserDto();
     private string password = string.Empty; // Placeholder til nyt password
-    private string message;
+    private string message; //Til at angive status 
     public async Task checkUserId()
     {
         try
         {
           
-            var user = await HttpUserService.GetUsersAsync(userId);
+            var user = await HttpUserService.GetUsersAsync(userId); //Finder først den pågældende bruger
             if (user != null)
             {
-                IsUserFound = true;
-                updateuser = user; // Opdaterer med den modtagne UserDto
-                message = string.Empty;
+                IsUserFound = true; 
+                updateruser = user; // Opdaterer med den modtagne UserDto
+                message = string.Empty; //Sørger for at fejlmeddelsen bliver tømt fra UI hvis der var fejl
 
             }
             else
@@ -56,13 +56,13 @@
     {
         try
         {
-            // Opret en ny CreateUserDto baseret på input fra brugeren
+            // Opretter en ny CreateUserDto baseret på input fra brugeren
             var updatedUser = new CreateUserDto
             {
-                UserName = updateuser.Username,
+                UserName = updateruser.Username,
                 Password = password // Brug det nye password
             };
-            await HttpUserService.UpdateUserAsync(userId, updatedUser);
+            await HttpUserService.UpdateUserAsync(userId, updatedUser); //Kalder update fra servicen med det pågælde id og den opdateret bruger
             message = $"User updated successfully!";
 
         }

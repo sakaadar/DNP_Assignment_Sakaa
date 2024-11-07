@@ -59,4 +59,13 @@ public class HttpUserService : IUserService
             })!;
     }
 
+    public async Task DeleteUserAsync(int id)
+    {
+        HttpResponseMessage httpResponse = await client.DeleteAsync($"/User/{id}");
+        if (!httpResponse.IsSuccessStatusCode)
+        {
+            string responseContent = await httpResponse.Content.ReadAsStringAsync();
+            throw new HttpRequestException($"Failed to delete user. Status code: {httpResponse.StatusCode}. Details: {responseContent}");
+        }
+    }
 }

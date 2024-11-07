@@ -103,7 +103,7 @@ public class UserController: ControllerBase
    }
 
    [HttpDelete("{id}")]
-   public async Task<ActionResult<UserDto>> DeleteUser(int id)
+   public async Task<IActionResult> DeleteUser(int id)
    {
       await userRepo.DeleteAsync(id);
       return NoContent();

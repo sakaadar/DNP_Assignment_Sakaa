@@ -1,0 +1,35 @@
+﻿@page "/PostList"
+@using BlazorApp.Services
+@using DTO
+@inject IPostService PostService
+<h3>PostList</h3>
+
+@if (posts == null)
+{
+<p>Loading...</p>
+}
+else if (posts.Count == 0)
+{
+<p>No posts available.</p>
+}
+else
+{
+<ul>
+    @foreach (var post in posts)
+    {
+    <li>
+        <a href="@($"/posts/{post.Id}")">@post.Title</a> Contains:
+        @post.body
+    </li>
+    }
+</ul>
+}
+
+@code {
+private List<PostDto> posts;
+
+protected override async Task OnInitializedAsync()
+{
+posts = await PostService.GetallPostsAsync();
+}
+}
