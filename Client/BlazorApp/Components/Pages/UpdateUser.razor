@@ -1,0 +1,75 @@
+﻿@page "/UpdateUser"
+@using BlazorApp.Services
+@using DTO
+<h3>Update User</h3>
+@inject IUserService HttpUserService
+
+<input @bind="userId" placeholder="Enter User ID" >
+<button type="button" @onclick="checkUserId">Check Id</button>
+@if (!string.IsNullOrEmpty(message))
+{
+<div style="color: red;">@message</div>
+}
+
+@if (IsUserFound)
+{
+    <input @bind="updateuser.Username" placeholder="Username" />
+    <input type="password" @bind="password" placeholder="Password" />
+    <button type="button" @onclick="updateUser">Update User</button>
+}
+@code
+{
+    private int userId;
+    private bool IsUserFound = false;
+    private UserDto updateuser = new UserDto();
+    private string password = string.Empty; // Placeholder til nyt password
+    private string message;
+    public async Task checkUserId()
+    {
+        try
+        {
+          
+            var user = await HttpUserService.GetUsersAsync(userId);
+            if (user != null)
+            {
+                IsUserFound = true;
+                updateuser = user; // Opdaterer med den modtagne UserDto
+                message = string.Empty;
+
+            }
+            else
+            {
+                IsUserFound = false;
+                message = $"User with ID {userId} not found.";
+            }
+
+        }
+        catch (Exception e)
+        {
+            IsUserFound = false;
+            message = $"Error: {e.Message}";
+        }
+        
+    }
+
+    public async Task updateUser()
+    {
+        try
+        {
+            // Opret en ny CreateUserDto baseret på input fra brugeren
+            var updatedUser = new CreateUserDto
+            {
+                UserName = updateuser.Username,
+                Password = password // Brug det nye password
+            };
+            await HttpUserService.UpdateUserAsync(userId, updatedUser);
+            message = $"User updated successfully!";
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            message = $"Error: {e.Message}";
+        }
+    }
+}

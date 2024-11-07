@@ -30,8 +30,33 @@ public class HttpUserService : IUserService
         })!;
     }
 
-    public Task UpdateUserAsync(int id, CreateUserDto request)
+    public async Task UpdateUserAsync(int id, CreateUserDto request)
     {
-        throw new NotImplementedException();
+        HttpResponseMessage httpResponse = await client.PutAsJsonAsync($"/User/{id}", request);
+        string responseContent = await httpResponse.Content.ReadAsStringAsync();
+
+        if (!httpResponse.IsSuccessStatusCode)
+        {
+            throw new Exception($"Server error: {httpResponse.StatusCode}. Content: {responseContent}");
+        }
+        
     }
+
+    public async Task<UserDto> GetUsersAsync(int id)
+    {
+        HttpResponseMessage httpResponse = await client.GetAsync($"/User/{id}");
+        string responseContent = await httpResponse.Content.ReadAsStringAsync();
+
+        if (!httpResponse.IsSuccessStatusCode)
+        {
+            throw new Exception($"Server error: {httpResponse.StatusCode}. Content: {responseContent}");
+        }
+
+        return JsonSerializer.Deserialize<UserDto>(responseContent,
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            })!;
+    }
+
 }
