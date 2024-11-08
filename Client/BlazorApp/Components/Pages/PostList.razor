@@ -26,10 +26,18 @@ else
 }
 
 @code {
-private List<PostDto> posts;
+    private List<PostDto> posts; // Gemmer listen af posts, der skal vises i brugergrænsefladen
 
-protected override async Task OnInitializedAsync()
-{
-posts = await PostService.GetallPostsAsync();
-}
+    // Når den starter, henter den data asynkront.
+    protected override async Task OnInitializedAsync()
+    {
+        await HentPosts(); // Kalder en separat metode for at gøre koden mere overskuelig
+    }
+
+    // Metode til at hente posts fra PostService
+    private async Task HentPosts()
+    {
+        posts = await PostService.GetallPostsAsync();
+        // Blazor opdaterer automatisk brugergrænsefladen, når data er hentet
+    }
 }
