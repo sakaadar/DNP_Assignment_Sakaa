@@ -1,0 +1,76 @@
+﻿@page "/CreateComment"
+@using BlazorApp.Services
+@using DTO
+@inject ICommentService HttpCpCommentService
+@inject IUserService HttpUserService
+<h3>Create a Comment to a post</h3>
+
+<input @bind="userId" placeholder="Enter a Post ID">
+<button type="button" @onclick="checkUserId">Check Id</button>
+@if (!string.IsNullOrEmpty(message))
+{
+<div style="color: green;">@message</div>
+}
+
+@if (IsUserFound) //Hvis Post er fundet
+{
+<input @bind="comment.Id" placeholder="Comment ID" type="number" /> //Inputboks til at skrive det nye comment ID
+<input  @bind="comment.body" placeholder="Body"type="text" /> //Inputboks til body
+<input @bind="comment.UserId" placeholder="Enter a user ID" type="number"/>
+<input @bind="comment.PostId" placeholder="Enter a post ID" type="number"/>
+<button type="button" @onclick="createComment">Create Comment</button> //Submit som kalder create comment metoden
+}
+@code {
+    private int userId; //bruges til at tjekke id
+    private bool IsUserFound = false; //Som udgangspunkt sat til
+    private CommentDto comment = new CommentDto();
+    private string body;
+    private string message; //Til at angive status 
+
+    public async Task checkUserId()
+    {
+        try
+        {
+
+            var user = await HttpUserService.GetUsersAsync(userId); //Finder først den pågældende bruger
+            if (user != null)
+            {
+                IsUserFound = true;
+                message = string.Empty; //Sørger for at fejlmeddelsen bliver tømt fra UI hvis der var fejl
+            }
+            else
+            {
+                IsUserFound = false;
+                message = $"User with ID {userId} not found.";
+            }
+        }
+        catch (Exception e)
+        {
+            IsUserFound = false;
+            message = $"Error: {e.Message}";
+        }
+    }
+    public async Task createComment()
+    {
+        try
+        {
+            // Opretter en ny CreateUpdateCommentDto baseret på input fra brugeren
+            var createUpdateCommentDto = new CreateUpdateCommentDto
+            {
+                body = comment.body,
+                postId = comment.PostId,
+                userId = comment.UserId
+            };
+          
+         //   await HttpUserService.UpdateUserAsync(userId, updatedUser); //Kalder update fra servicen med det pågælde id og den opdateret bruger
+         await HttpCpCommentService.createCommentasync(createUpdateCommentDto);
+         message = $"Comment succesfully created to post ID: {comment.PostId} by user with ID: {comment.UserId}"; 
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            message = $"Error: {e.Message}";
+        }
+    }
+}

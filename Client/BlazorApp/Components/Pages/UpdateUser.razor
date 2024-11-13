@@ -63,7 +63,7 @@
                 Password = password // Brug det nye password
             };
             await HttpUserService.UpdateUserAsync(userId, updatedUser); //Kalder update fra servicen med det pågælde id og den opdateret bruger
-            message = $"User updated successfully!";
+            message = $"User updated successfully!"; 
 
         }
         catch (Exception e)

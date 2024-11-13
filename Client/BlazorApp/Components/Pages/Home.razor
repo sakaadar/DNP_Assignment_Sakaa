@@ -2,6 +2,13 @@
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+@code {
+private string backgroundImageUrl = "/Images/wix-forum.jpg"; // Sørg for, at stien er korrekt
+}
 
-Welcome to your new app.
+<div style="background-image: url('@backgroundImageUrl'); background-size: cover; background-position: center; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+    <div class="text-container">
+        <h1>Welcome to the Forum</h1>
+        <p>Interact with your friends on the best platform out there!</p>
+    </div>
+</div>

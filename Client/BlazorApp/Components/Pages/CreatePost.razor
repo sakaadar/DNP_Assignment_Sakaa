@@ -31,7 +31,6 @@
             var newPost = new CreateUpdatePostDto { Title = Title, body = body, UserId = userId };
             var result = await HttpPostService.CreatePostAsync(newPost);
             message = $"Post Created succedfully by user with Id: {result.UserId}";
-
         }
         catch (Exception e)
         {
