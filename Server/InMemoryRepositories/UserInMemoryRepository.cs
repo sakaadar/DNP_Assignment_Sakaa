@@ -66,4 +66,9 @@ public class UserInMemoryRepository: IUserRepository
         bool isTaken = users.Any(u=>u.username.Equals(username, StringComparison.OrdinalIgnoreCase));
         return Task.FromResult(isTaken);
     }
+
+    public Task<User?> FindByUsernameAsync(string username)
+    {
+        throw new NotImplementedException();
+    }
 }

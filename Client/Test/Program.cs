@@ -1,14 +1,6 @@
-using System;
-using System.Net.Http;
-using BlazorApp.Auth;
-using BlazorApp.Components;
-using BlazorApp.Services;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using Test.Components;
 
-namespace BlazorApp;
+namespace Test;
 
 public class Program
 {
@@ -19,13 +11,6 @@ public class Program
         // Add services to the container.
         builder.Services.AddRazorComponents()
             .AddInteractiveServerComponents();
-        
-       builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5250") });
-      // builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7180") });
-        builder.Services.AddScoped<IUserService, HttpUserService>();
-        builder.Services.AddScoped<IPostService, HttpPostService>();
-        builder.Services.AddScoped<ICommentService, HttpCommentService>();
-        builder.Services.AddScoped<AuthenticationStateProvider, SimpleAuthProvider>();
 
         var app = builder.Build();
 

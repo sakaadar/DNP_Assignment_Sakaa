@@ -10,4 +10,5 @@ public interface IUserRepository
     Task<User> GetSingleAsync(int id);
     IQueryable<User> GetMany();
     Task<bool> IsUsernameTakenAsync(string username);
+    Task<User?> FindByUsernameAsync(string username);
 }

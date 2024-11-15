@@ -84,4 +84,14 @@ public class UserFileRepository : IUserRepository
        bool isTaken = users.Any(u => u.username == username);
        return isTaken;
     }
+    public async Task<User?> FindByUsernameAsync(string username)
+    {
+        // Læs brugerdata fra filen
+        string usersAsJson = await File.ReadAllTextAsync(filePath);
+        List<User> users = JsonSerializer.Deserialize<List<User>>(usersAsJson)!;
+
+        // Find og returner brugeren med det givne brugernavn
+        var user = users.FirstOrDefault(u => u.username == username);
+        return user; // Returnerer null, hvis brugeren ikke findes
+    }
 }
