@@ -26,12 +26,12 @@ public class AuthController : ControllerBase
             return Unauthorized("User not found");
         }
 
-        // Valider brugerens password (forudsat at det også er en del af `request`)
+        // Valider brugerens password 
         if (user.password != request.Password)
         {
             return Unauthorized("Invalid password");
         }
-        // Konverter brugeren til en DTO (uden følsomme oplysninger) og returner den
+        // Konverter brugeren til en DTO 
         var userDto = new UserDto
         {
             Id = user.id,

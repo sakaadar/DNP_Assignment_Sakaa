@@ -2,21 +2,27 @@
 @using BlazorApp.Services
 @using DTO
 
-
+@attribute [Authorize]
 @inject IPostService HttpPostService
+<AuthorizeView>
+    <Authorized>
+        <h3>Create Post</h3>
 
-<h3>Create Post</h3>
-
-<form>
-    <input @bind="Title" placeholder="Enter Title"/>
-    <input @bind="body" placeholder="Enter a body">
-    <input @bind="userId" placeholder="Enter a user id">
-    <button type="button" @onclick="createPost">Submit</button>
-    @if (!string.IsNullOrEmpty(message))
-    {
-        <p>@message</p>
-    }
-</form>
+        <form>
+            <input @bind="Title" placeholder="Enter Title"/>
+            <input @bind="body" placeholder="Enter a body">
+            <input @bind="userId" placeholder="Enter a user id">
+            <button type="button" @onclick="createPost">Submit</button>
+            @if (!string.IsNullOrEmpty(message))
+            {
+                <p>@message</p>
+            }
+        </form>
+    </Authorized>
+    <NotAuthorized>
+        <p>Du skal være logget ind for at kunne tilgå dette</p>
+    </NotAuthorized>
+</AuthorizeView>
 @code
 {
     private string Title;

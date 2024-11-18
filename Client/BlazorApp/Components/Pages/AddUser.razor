@@ -3,17 +3,25 @@
 @using DTO
 <h3>Add New User</h3>
 @inject IUserService HttpUserService
+@attribute [Authorize]
+<AuthorizeView>
+    <Authorized>
+        <form>
+            <input @bind="Username" placeholder="Username"/>
+            <input type="password" @bind="password" placeholder="Password"/>
+            <button type="button" @onclick="addUser">Submit</button>
 
-<form>
-    <input @bind="Username" placeholder="Username" />
-    <input type="password" @bind="password" placeholder="Password" />
-    <button type="button" @onclick="addUser">Submit</button>
+            @if (!string.IsNullOrEmpty(message))
+            {
+                <p>@message</p>
+            }
+        </form>
+    </Authorized>
+    <NotAuthorized>
+        <p>Du skal være logget ind for at se dette indhold.</p>
+    </NotAuthorized>
+</AuthorizeView>
 
-    @if (!string.IsNullOrEmpty(message))
-    {
-        <p>@message</p>
-    }
-</form>
 
 @code {
     private string Username;

@@ -2,28 +2,34 @@
 @using BlazorApp.Services
 @inject IUserService HttpUserService
 <h3>DeleteUser</h3>
+@attribute [Authorize]
 
+<AuthorizeView>
+    <Authorized>
+        <input @bind="userId" placeholder="Enter User ID">
+        <button type="button" @onclick="checkUserId">Check Id</button>
 
+        @if (!string.IsNullOrEmpty(message))
+        {
+            @if (IsUserFound)
+            {
+                <div style="color: green;">@message</div>
+            }
+            else
+            {
+                <div style="color: red;">@message</div>
+            }
+        }
 
-<input @bind="userId" placeholder="Enter User ID" >
-<button type="button" @onclick="checkUserId">Check Id</button>
-
-@if (!string.IsNullOrEmpty(message))
-{
-    @if (IsUserFound)
-    {
-        <div style="color: green;">@message</div>
-    }
-    else
-    {
-        <div style="color: red;">@message</div>
-    }
-}
-
-@if (IsUserFound)
-{
-    <button type="button" @onclick="deleteUser">Delete User</button>
-}
+        @if (IsUserFound)
+        {
+            <button type="button" @onclick="deleteUser">Delete User</button>
+        }
+    </Authorized>
+    <NotAuthorized>
+        <p>Du skal være logget ind for at kunne tilgå dette indhold</p>
+    </NotAuthorized>
+</AuthorizeView>
 @code
 {
     private int userId;

@@ -1,22 +1,30 @@
 ﻿@page "/UpdateUser"
 @using BlazorApp.Services
 @using DTO
-<h3>Update User</h3>
 @inject IUserService HttpUserService
+@attribute [Authorize]
+<h3>Update User</h3>
 
-<input @bind="userId" placeholder="Enter User ID" >
-<button type="button" @onclick="checkUserId">Check Id</button>
-@if (!string.IsNullOrEmpty(message))
-{
-<div style="color: green;">@message</div>
-}
+<AuthorizeView>
+    <Authorized>
+        <input @bind="userId" placeholder="Enter User ID">
+        <button type="button" @onclick="checkUserId">Check Id</button>
+        @if (!string.IsNullOrEmpty(message))
+        {
+            <div style="color: green;">@message</div>
+        }
 
-@if (IsUserFound) //Hvis bruger er fundet
-{
-    <input @bind="updateruser.Username" placeholder="Username" /> //Inputboks til at skrive det nye brugernavn
-    <input type="password" @bind="password" placeholder="Password" /> //Inputboks til password
-    <button type="button" @onclick="updateUser">Update User</button> //Submit som kalder updateUser metoden
-}
+        @if (IsUserFound) //Hvis bruger er fundet
+        {
+            <input @bind="updateruser.Username" placeholder="Username"/> //Inputboks til at skrive det nye brugernavn
+            <input type="password" @bind="password" placeholder="Password"/> //Inputboks til password
+            <button type="button" @onclick="updateUser">Update User</button> //Submit som kalder updateUser metoden
+        }
+    </Authorized>
+    <NotAuthorized>
+        <p>Du skal være logget ind for at kunne tilgå dette indhold.</p>
+    </NotAuthorized>
+</AuthorizeView>
 @code
 {
     private int userId; //bruges til at tjekke id

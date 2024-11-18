@@ -3,23 +3,31 @@
 @using DTO
 @inject ICommentService HttpCpCommentService
 @inject IUserService HttpUserService
+@attribute [Authorize]
 <h3>Create a Comment to a post</h3>
 
-<input @bind="userId" placeholder="Enter a Post ID">
-<button type="button" @onclick="checkUserId">Check Id</button>
-@if (!string.IsNullOrEmpty(message))
-{
-<div style="color: green;">@message</div>
-}
+<AuthorizeView>
+    <Authorized>
+        <input @bind="userId" placeholder="Enter a Post ID">
+        <button type="button" @onclick="checkUserId">Check Id</button>
+        @if (!string.IsNullOrEmpty(message))
+        {
+            <div style="color: green;">@message</div>
+        }
 
-@if (IsUserFound) //Hvis Post er fundet
-{
-<input @bind="comment.Id" placeholder="Comment ID" type="number" /> //Inputboks til at skrive det nye comment ID
-<input  @bind="comment.body" placeholder="Body"type="text" /> //Inputboks til body
-<input @bind="comment.UserId" placeholder="Enter a user ID" type="number"/>
-<input @bind="comment.PostId" placeholder="Enter a post ID" type="number"/>
-<button type="button" @onclick="createComment">Create Comment</button> //Submit som kalder create comment metoden
-}
+        @if (IsUserFound) //Hvis Post er fundet
+        {
+            <input @bind="comment.Id" placeholder="Comment ID" type="number"/> //Inputboks til at skrive det nye comment ID
+            <input @bind="comment.body" placeholder="Body"type="text"/> //Inputboks til body
+            <input @bind="comment.UserId" placeholder="Enter a user ID" type="number"/>
+            <input @bind="comment.PostId" placeholder="Enter a post ID" type="number"/>
+            <button type="button" @onclick="createComment">Create Comment</button> //Submit som kalder create comment metoden
+        }
+    </Authorized>
+    <NotAuthorized>
+        <p>Du skal være logget ind for at kunne tilgå dette indhold</p>
+    </NotAuthorized>
+</AuthorizeView>
 @code {
     private int userId; //bruges til at tjekke id
     private bool IsUserFound = false; //Som udgangspunkt sat til
