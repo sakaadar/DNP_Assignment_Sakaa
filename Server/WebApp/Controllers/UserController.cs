@@ -1,6 +1,7 @@
 ﻿using DTO;
 using Entitities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RepositoryContracts;
 
 namespace WebApp.Controllers;
@@ -42,14 +43,13 @@ public class UserController: ControllerBase
    {
       try
       {
-         var users = userRepo.GetMany();
+         var usersQuery = userRepo.GetMany();
          if (!string.IsNullOrEmpty(usernameContains)) //tjekkes at der ikke er blevet sendt en tom streng
          {
-            users = users.Where(u => u.username.Contains(usernameContains)); //Filtrering users om den indeholder den streng der blev sendt med.
+            usersQuery = usersQuery.Where(u => u.username.Contains(usernameContains)); //Filtrering users om den indeholder den streng der blev sendt med.
          }
-         List<UserDto> dto = users.Select(u => new UserDto{Id = u.Id, Username = u.username}).ToList(); //Konvertere hver brugere til en DTO
+         var dto = await usersQuery.Select(u => new UserDto{Id = u.Id, Username = u.username}).ToListAsync(); //Konvertere hver brugere til en DTO
          return Ok(dto);
-
       }
       catch (Exception e)
       {

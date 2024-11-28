@@ -1,5 +1,7 @@
+using EfcRepositories;
 using FileRepositories;
 using RepositoryContracts;
+using AppContext = EfcRepositories.AppContext;
 
 namespace WebApp;
 
@@ -16,10 +18,10 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         
-        builder.Services.AddScoped<IPostRepository, PostFileRepository>();
-        builder.Services.AddScoped<IUserRepository, UserFileRepository>();
-        builder.Services.AddScoped<ICommentRepository, CommentFileRepository>();
-
+        builder.Services.AddScoped<IPostRepository, EfcPostRepository>(); // Old: PostFileRepository>();
+        builder.Services.AddScoped<IUserRepository, EfcUserRepository>(); //Old: UserFileRepository>()
+        builder.Services.AddScoped<ICommentRepository, EfcCommentRepository>(); // Old:CommentFileRepository>()
+        builder.Services.AddDbContext<AppContext>();
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.

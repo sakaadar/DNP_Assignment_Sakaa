@@ -1,0 +1,65 @@
+﻿@page "/UserList"
+@using BlazorApp.Services
+@using DTO
+@using Microsoft.VisualBasic.FileIO
+@rendermode InteractiveServer
+@inject IUserService HttpUserService
+
+<PageTitle>List of All Users</PageTitle>
+<h3>User List</h3>
+<AuthorizeView>
+    <Authorized>
+        <div>
+            <button @onclick="LoadAllUsers">Load All Users</button>
+        </div>
+
+        @if (users.Any())
+        {
+            <ul>
+                @foreach (var user in users)
+                {
+                    <li>Username: @user.Username, ID: @user.Id</li>
+                }
+            </ul>
+        }
+        else if (isLoading)
+        {
+            <p>Loading...</p>
+        }
+        else if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <p style="color: red;">@errorMessage</p>
+        }
+        else
+        {
+            <p>No users found.</p>
+        }
+    </Authorized>
+    <NotAuthorized>
+        <p>Du skal være logget ind for at kunne tilgå dette indhold.</p>
+    </NotAuthorized>
+</AuthorizeView>
+@code {
+    private List<UserDto> users = new();
+    private bool isLoading = false;
+    private string? errorMessage = null;
+
+    private async Task LoadAllUsers()
+    {
+        try
+        {
+            isLoading = true;  // Set loading to true before starting the fetch
+            errorMessage = null; // Clear any previous error message
+            users = await HttpUserService.GetAllUsersAsync();
+        }
+        catch (Exception e)
+        {
+            errorMessage = $"Error fetching users: {e.Message}"; // Display error message
+            Console.WriteLine($"Error fetching users: {e.Message}");
+        }
+        finally
+        {
+            isLoading = false; // Reset loading state
+        }
+    }
+}

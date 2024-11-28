@@ -68,4 +68,17 @@ public class HttpUserService : IUserService
             throw new HttpRequestException($"Failed to delete user. Status code: {httpResponse.StatusCode}. Details: {responseContent}");
         }
     }
+    public async Task<List<UserDto>> GetAllUsersAsync()
+    {
+        HttpResponseMessage httpResponse = await client.GetAsync("/User");
+        string responseContent = await httpResponse.Content.ReadAsStringAsync();
+
+        if (!httpResponse.IsSuccessStatusCode)
+        {
+            throw new Exception($"Server error: {httpResponse.StatusCode}. Content: {responseContent}");
+        }
+
+        return JsonSerializer.Deserialize<List<UserDto>>(responseContent, 
+            new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
+    }
 }
