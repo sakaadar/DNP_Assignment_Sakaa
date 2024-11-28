@@ -21,8 +21,8 @@ public class UserFileRepository : IUserRepository
     {
         string usersAsjson = await File.ReadAllTextAsync(filePath);
         List<User> users = JsonSerializer.Deserialize<List<User>>(usersAsjson)!;
-        int maxId = users.Count > 0 ? users.Max(u=>u.id) : 1;
-        user.id = maxId + 1;
+        int maxId = users.Count > 0 ? users.Max(u=>u.Id) : 1;
+        user.Id = maxId + 1;
         users.Add(user);
         usersAsjson = JsonSerializer.Serialize(users);
         await File.WriteAllTextAsync(filePath, usersAsjson);
@@ -33,7 +33,7 @@ public class UserFileRepository : IUserRepository
     {
         string usersAsjson = await File.ReadAllTextAsync(filePath);
         List<User> users = JsonSerializer.Deserialize<List<User>>(usersAsjson)!;
-        User? existingUser = users.SingleOrDefault(u => u.id == user.id);
+        User? existingUser = users.SingleOrDefault(u => u.Id == user.Id);
         if (existingUser == null)
         {
             throw new NullReferenceException("User Could not be found");
@@ -44,11 +44,11 @@ public class UserFileRepository : IUserRepository
         await File.WriteAllTextAsync(filePath, usersAsjson);
     }
 
-    public async Task DeleteAsync(int id)
+    public async Task DeleteAsync(int Id)
     {
         string usersAsjson = await File.ReadAllTextAsync(filePath);
         List<User> users = JsonSerializer.Deserialize<List<User>>(usersAsjson)!;
-        User? userToDelete = users.SingleOrDefault(u => u.id == id);
+        User? userToDelete = users.SingleOrDefault(u => u.Id == Id);
         if (userToDelete is null)
         {
             throw new NullReferenceException("User Could not be found");
@@ -58,11 +58,11 @@ public class UserFileRepository : IUserRepository
         await File.WriteAllTextAsync(filePath, usersAsjson);
     }
 
-    public async Task<User> GetSingleAsync(int id)
+    public async Task<User> GetSingleAsync(int Id)
     {
         string usersAsjson = await File.ReadAllTextAsync(filePath);
         List<User> users = JsonSerializer.Deserialize<List<User>>(usersAsjson)!;
-        User? singleUser = users.SingleOrDefault(u => u.id == id);
+        User? singleUser = users.SingleOrDefault(u => u.Id == Id);
         if (singleUser is null)
         {
             throw new NullReferenceException("User does not exist");

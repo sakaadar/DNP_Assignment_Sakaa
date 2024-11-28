@@ -25,7 +25,7 @@ public class UserController: ControllerBase
          User created = await userRepo.AddAsync(user);
          UserDto dto = new()
          {
-            Id = created.id,
+            Id = created.Id,
             Username = created.username
          };
          return Created($"/User/{dto.Id}", created);
@@ -47,7 +47,7 @@ public class UserController: ControllerBase
          {
             users = users.Where(u => u.username.Contains(usernameContains)); //Filtrering users om den indeholder den streng der blev sendt med.
          }
-         List<UserDto> dto = users.Select(u => new UserDto{Id = u.id, Username = u.username}).ToList(); //Konvertere hver brugere til en DTO
+         List<UserDto> dto = users.Select(u => new UserDto{Id = u.Id, Username = u.username}).ToList(); //Konvertere hver brugere til en DTO
          return Ok(dto);
 
       }
@@ -69,7 +69,7 @@ public class UserController: ControllerBase
             return NotFound("User not found");
          }
 
-         return Ok(new UserDto { Id = user.id, Username = user.username });
+         return Ok(new UserDto { Id = user.Id, Username = user.username });
       }
       catch (Exception e)
       {

@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp", "Client\BlazorA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpClientTestApp", "HttpClientTestApp\HttpClientTestApp.csproj", "{F3031D43-4E44-47AF-9602-4B6A4058D634}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EfcRepositories", "Server\EfcRepositories\EfcRepositories.csproj", "{2FA7C9F4-4EF6-4832-92D3-D72C9F86AA9E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,7 @@ Global
 		{898448C1-F270-4E38-B8AA-6757F5F6D780} = {391BCA59-4883-4137-990D-2D418FBC290E}
 		{5D080D14-DAB7-43AB-AEED-E83C444E40A2} = {A4A48039-993C-4D44-8DF7-265AAF0D7037}
 		{ECCA277E-D571-46F4-B4D3-7837D60524B8} = {7C4439C0-2C22-45B5-B0A4-1AC478F21F1B}
+		{2FA7C9F4-4EF6-4832-92D3-D72C9F86AA9E} = {A4A48039-993C-4D44-8DF7-265AAF0D7037}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{140D5FC5-2AC2-422D-9FFC-28F7489F16FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -76,5 +79,9 @@ Global
 		{F3031D43-4E44-47AF-9602-4B6A4058D634}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3031D43-4E44-47AF-9602-4B6A4058D634}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3031D43-4E44-47AF-9602-4B6A4058D634}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FA7C9F4-4EF6-4832-92D3-D72C9F86AA9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FA7C9F4-4EF6-4832-92D3-D72C9F86AA9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FA7C9F4-4EF6-4832-92D3-D72C9F86AA9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FA7C9F4-4EF6-4832-92D3-D72C9F86AA9E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

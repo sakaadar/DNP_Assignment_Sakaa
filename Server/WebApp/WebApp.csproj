@@ -12,6 +12,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Shared\DTO\DTO.csproj" />
+      <ProjectReference Include="..\EfcRepositories\EfcRepositories.csproj" />
       <ProjectReference Include="..\Entitities\Entitities.csproj" />
       <ProjectReference Include="..\FileRepositories\FileRepositories.csproj" />
       <ProjectReference Include="..\RepositoryContracts\RepositoryContracts.csproj" />

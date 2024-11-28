@@ -34,7 +34,7 @@ public class AuthController : ControllerBase
         // Konverter brugeren til en DTO 
         var userDto = new UserDto
         {
-            Id = user.id,
+            Id = user.Id,
             Username = user.username,
             // Andre nødvendige felter, men uden password
         };
